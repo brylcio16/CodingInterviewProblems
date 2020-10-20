@@ -1,9 +1,16 @@
-package com.example.problem2
+package com.example
 
+import com.example.problem1.Problem1
 import com.example.problem2.organization.Employee
 import com.example.problem2.organization.Organization
+import java.util.*
 
-fun main(args: Array<String>) {
+fun main() {
+    println("Problem 1:")
+    val v = Vector<Int>(listOf(1, 2, 3, 1))
+    println("Result: ${Problem1.rob(v)}")
+    println()
+    println("Problem 2:")
     val organization = Organization()
     val johnId = organization.add(Employee("John", 42, "John address"))
 

@@ -20,11 +20,5 @@ class Problem1 {
 
             return result.last()
         }
-
-        @JvmStatic
-        fun main(args: Array<String>) {
-            val v = Vector<Int>(listOf(1, 2, 3, 1))
-            println("Result: ${rob(v)}")
-        }
     }
 }
