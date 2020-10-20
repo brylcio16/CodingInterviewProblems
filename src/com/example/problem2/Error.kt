@@ -1,6 +1,6 @@
-package com.example.problem2.organization
+package com.example.problem2
 
-object Status {
+object Error {
     const val CEO_ALREADY_EXISTS = -1
     const val CEO_NOT_EXISTS = -2
     const val EMPLOYEE_IS_INVALID = -3

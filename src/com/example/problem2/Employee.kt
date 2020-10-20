@@ -1,4 +1,4 @@
-package com.example.problem2.organization
+package com.example.problem2
 
 
 open class Employee(
@@ -9,9 +9,13 @@ open class Employee(
         open var currentBoss: Int = -1) {
     open var employeeId: Int = 0
 
-    constructor(employeeId: Int, name: String, age: Int, address: String, currentReports: String, currentBoss: Int) : this(name, age, address, currentReports, currentBoss) {
+    private constructor(employeeId: Int, name: String, age: Int, address: String, currentReports: String, currentBoss: Int) : this(name, age, address, currentReports, currentBoss) {
         this.employeeId = employeeId
     }
+
+//    constructer used to create a copy of an existing instance to prevent user change data directly on instance that is in Organization's HashMap
+//    Update of an employee has to be done by using update method, because of Organization constraints
+    constructor(employee: Employee) : this(employee.employeeId, employee.name, employee.age, employee.address, employee.currentReports, employee.currentBoss)
 
     open fun isCeo(): Boolean {
         return currentBoss == -1

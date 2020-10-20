@@ -1,9 +1,10 @@
-package com.example.problem2.organization
+package com.example.problem2
+
 
 open class Organization {
     private var idCount = 0
     private var hasCeo = false
-    private val employees: HashMap<Int, EmployeeEntity> = HashMap()
+    private val employees: HashMap<Int, Employee> = HashMap()
     // mapping employee names to employeeId, so finding employee by name is fast
     private val namesIndex: HashMap<String, Int> = HashMap()
 
@@ -18,7 +19,7 @@ open class Organization {
     }
 
     open fun getById(id: Int): Employee? {
-        return employees[id]?.toEmployee()
+        return employees[id]?.let { Employee(it) }
     }
 
     open fun getIdByName(name: String): Int? {
@@ -33,17 +34,21 @@ open class Organization {
         return employees.containsKey(id)
     }
 
+    /**
+     * Return: id of added employee (result >= 0), or error (result < 0)
+     */
     fun add(employee: Employee): Int {
         if(hasCeo() && employee.isCeo())
-            return Status.CEO_ALREADY_EXISTS
+            return Error.CEO_ALREADY_EXISTS
         if(!hasCeo() && !employee.isCeo())
-            return Status.CEO_NOT_EXISTS
+            return Error.CEO_NOT_EXISTS
         if(!employee.isValid())
-            return Status.EMPLOYEE_IS_INVALID
+            return Error.EMPLOYEE_IS_INVALID
         if(employeeExists(employee.name))
-            return Status.EMPLOYEE_ALREADY_EXISTS
+            return Error.EMPLOYEE_ALREADY_EXISTS
 
-        val entity = EmployeeEntity(getNextId(), employee)
+        employee.employeeId = getNextId()
+        val entity = Employee(employee)
         employees[entity.employeeId] = entity
         namesIndex[employee.name] = entity.employeeId
         if(employee.isCeo())
@@ -51,27 +56,30 @@ open class Organization {
         return entity.employeeId
     }
 
+    /**
+     * Return: id of added employee (result >= 0), or error (result < 0)
+     */
     fun update(employee: Employee): Int {
         if(hasCeo() && employee.isCeo())
-            return Status.CEO_ALREADY_EXISTS
+            return Error.CEO_ALREADY_EXISTS
         if(!hasCeo() && !employee.isCeo())
-            return Status.CEO_NOT_EXISTS
+            return Error.CEO_NOT_EXISTS
         if(!employeeExists(employee.employeeId))
-            return Status.EMPLOYEE_NOT_EXISTS
+            return Error.EMPLOYEE_NOT_EXISTS
         if(!employee.isValid())
-            return Status.EMPLOYEE_IS_INVALID
+            return Error.EMPLOYEE_IS_INVALID
 
         val employeeEntity = getById(employee.employeeId)!!
 
         // name of an employee has been changed, so  we have to change also name index to new one
         if(employeeEntity.name != employee.name) {
             if(employeeExists(employee.name))
-                return Status.EMPLOYEE_WITH_NAME_ALREADY_EXISTS
+                return Error.EMPLOYEE_WITH_NAME_ALREADY_EXISTS
             namesIndex.remove(employeeEntity.name)
             namesIndex[employee.name] = employee.employeeId
         }
 
-        employees[employee.employeeId] = EmployeeEntity(employee.employeeId, employee)
+        employees[employee.employeeId] = Employee(employee)
         return employee.employeeId
     }
 

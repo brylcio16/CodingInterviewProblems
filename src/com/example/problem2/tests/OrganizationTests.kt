@@ -1,8 +1,8 @@
-package com.example.problem2.organization.tests
+package com.example.problem2.tests
 
-import com.example.problem2.organization.Employee
-import com.example.problem2.organization.Organization
-import com.example.problem2.organization.Status
+import com.example.problem2.Employee
+import com.example.problem2.Organization
+import com.example.problem2.Error
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mockito
@@ -42,7 +42,7 @@ class OrganizationTests {
         Mockito.`when`(employee.isCeo()).thenReturn(true)
         Mockito.`when`(organization.hasCeo()).thenReturn(true)
 
-        assertEquals(Status.CEO_ALREADY_EXISTS, organization.add(employee))
+        assertEquals(Error.CEO_ALREADY_EXISTS, organization.add(employee))
     }
 
     @Test
@@ -51,7 +51,7 @@ class OrganizationTests {
         Mockito.`when`(employee.isCeo()).thenReturn(false)
         Mockito.`when`(organization.hasCeo()).thenReturn(false)
 
-        assertEquals(Status.CEO_NOT_EXISTS, organization.add(employee))
+        assertEquals(Error.CEO_NOT_EXISTS, organization.add(employee))
     }
 
     @Test
@@ -60,7 +60,7 @@ class OrganizationTests {
         Mockito.`when`(employee.isCeo()).thenReturn(true)
         Mockito.`when`(employee.isValid()).thenReturn(false)
 
-        assertEquals(Status.EMPLOYEE_IS_INVALID, organization.add(employee))
+        assertEquals(Error.EMPLOYEE_IS_INVALID, organization.add(employee))
     }
 
     @Test
@@ -71,7 +71,7 @@ class OrganizationTests {
         Mockito.`when`(employee.name).thenReturn("John")
         Mockito.`when`(organization.employeeExists("John")).thenReturn(true)
 
-        assertEquals(Status.EMPLOYEE_ALREADY_EXISTS, organization.add(employee))
+        assertEquals(Error.EMPLOYEE_ALREADY_EXISTS, organization.add(employee))
     }
 
     @Test
@@ -112,7 +112,7 @@ class OrganizationTests {
         Mockito.`when`(employee.isCeo()).thenReturn(true)
         Mockito.`when`(organization.hasCeo()).thenReturn(true)
 
-        assertEquals(Status.CEO_ALREADY_EXISTS, organization.update(employee))
+        assertEquals(Error.CEO_ALREADY_EXISTS, organization.update(employee))
     }
 
     @Test
@@ -121,7 +121,7 @@ class OrganizationTests {
         Mockito.`when`(employee.isCeo()).thenReturn(false)
         Mockito.`when`(organization.hasCeo()).thenReturn(false)
 
-        assertEquals(Status.CEO_NOT_EXISTS, organization.update(employee))
+        assertEquals(Error.CEO_NOT_EXISTS, organization.update(employee))
     }
 
     @Test
@@ -133,7 +133,7 @@ class OrganizationTests {
         Mockito.`when`(employee.isValid()).thenReturn(false)
         Mockito.`when`(organization.employeeExists(0)).thenReturn(true)
 
-        assertEquals(Status.EMPLOYEE_IS_INVALID, organization.update(employee))
+        assertEquals(Error.EMPLOYEE_IS_INVALID, organization.update(employee))
     }
 
     @Test
@@ -142,7 +142,7 @@ class OrganizationTests {
         Mockito.`when`(employee.isCeo()).thenReturn(true)
         Mockito.`when`(employee.isValid()).thenReturn(true)
 
-        assertEquals(Status.EMPLOYEE_NOT_EXISTS, organization.update(employee))
+        assertEquals(Error.EMPLOYEE_NOT_EXISTS, organization.update(employee))
     }
 
     @Test
@@ -163,7 +163,7 @@ class OrganizationTests {
         Mockito.`when`(organization.employeeExists(0)).thenReturn(true)
         Mockito.`when`(organization.getById(0)).thenReturn(employee2)
 
-        assertEquals(Status.EMPLOYEE_WITH_NAME_ALREADY_EXISTS, organization.update(employee1))
+        assertEquals(Error.EMPLOYEE_WITH_NAME_ALREADY_EXISTS, organization.update(employee1))
     }
 
     @Test

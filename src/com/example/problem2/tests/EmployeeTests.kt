@@ -1,6 +1,6 @@
-package com.example.problem2.organization.tests
+package com.example.problem2.tests
 
-import com.example.problem2.organization.Employee
+import com.example.problem2.Employee
 import org.junit.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
