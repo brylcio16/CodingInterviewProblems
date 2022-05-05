@@ -7,7 +7,7 @@ import java.util.*
 
 fun main() {
     println("Problem 1:")
-    val v = Vector<Int>(listOf(1, 2, 3, 1))
+    val v = Vector<Int>(listOf(3, 1, 2, 5, 4, 2))
     println("\tInput: $v")
     println("\tResult: ${Problem1.rob(v)}")
     println()
